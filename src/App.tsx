@@ -3,10 +3,10 @@ import { useState } from "react";
 export function App() {
   const [value, setValue] = useState("");
   const [list, setList] = useState([
-    { id: "1", label: "Fazer café" },
-    { id: "2", label: "Fazer café" },
-    { id: "3", label: "Fazer almoço" },
-    { id: "4", label: "Fazer janta" },
+    { id: "1", label: "Fazer café", complete: false },
+    { id: "2", label: "Fazer café", complete: false },
+    { id: "3", label: "Fazer almoço", complete: false },
+    { id: "4", label: "Fazer janta", complete: false },
   ]);
 
   return (
@@ -16,7 +16,7 @@ export function App() {
         onClick={() => {
           setList([
             ...list,
-            { id: (list.length + 1).toString(), label: value },
+            { id: (list.length + 1).toString(), label: value, complete: false },
           ]);
           setValue("");
         }}
@@ -26,7 +26,31 @@ export function App() {
 
       <ol>
         {list.map((listItem) => (
-          <li key={listItem.id}>{listItem.label}</li>
+          <li key={listItem.id}>
+            {listItem.label}
+
+            {listItem.complete ? "Concluido" : ""}
+            <button
+              onClick={() =>
+                setList([...list.filter((item) => item.id !== listItem.id)])
+              }
+            >
+              Remover
+            </button>
+
+            <button
+              onClick={() =>
+                setList([
+                  ...list.map((item) => ({
+                    ...item,
+                    complete: item.id === listItem.id ? true : item.complete,
+                  })),
+                ])
+              }
+            >
+              Concluir
+            </button>
+          </li>
         ))}
       </ol>
     </div>
