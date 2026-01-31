@@ -9,20 +9,20 @@ export function App() {
     { id: "4", label: "Fazer janta", complete: false },
   ]);
 
+  const handleAdd = (value: string) => {
+    setList([
+      ...list,
+      {
+        id: (list.length + 1).toString(),
+        complete: false,
+        label: value,
+      },
+    ]);
+  };
+
   return (
     <div>
-      <InputAdd
-        onAdd={(value: string) => {
-          setList([
-            ...list,
-            {
-              id: (list.length + 1).toString(),
-              complete: false,
-              label: value,
-            },
-          ]);
-        }}
-      />
+      <InputAdd onAdd={handleAdd} />
 
       <ol>
         {list.map((listItem) => (
