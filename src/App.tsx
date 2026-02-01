@@ -2,6 +2,22 @@ import { useState } from "react";
 import { InputAdd } from "./components/InputAdd";
 import { TodoItem } from "./components/TodoItem";
 import { List } from "./components/List";
+import { TodoAPI } from "./shared/services/api/TodoAPI";
+
+TodoAPI.getAll().then((data) => console.log("1", data));
+
+TodoAPI.create({ label: "Fazer Almoço", complete: false });
+TodoAPI.create({ label: "Fazer Lanche", complete: false });
+
+TodoAPI.getAll().then((data) => console.log("2", data));
+
+TodoAPI.updateById("1", { label: "Fazer Janta", complete: false });
+
+TodoAPI.getAll().then((data) => console.log("3", data));
+
+TodoAPI.deleteById("1");
+
+TodoAPI.getAll().then((data) => console.log("4", data));
 
 export function App() {
   const [list, setList] = useState([
@@ -45,7 +61,6 @@ export function App() {
             key={listItem.id}
             onComplete={() => handleComplete(listItem.id)}
             onRemove={() => handleRemove(listItem.id)}
-
             id={listItem.id}
             label={listItem.label}
             complete={listItem.complete}
