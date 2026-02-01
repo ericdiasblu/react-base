@@ -1,41 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { InputAdd } from "./components/InputAdd";
 import { TodoItem } from "./components/TodoItem";
 import { List } from "./components/List";
-import { TodoAPI } from "./shared/services/api/TodoAPI";
-
-TodoAPI.getAll().then((data) => console.log("1", data));
-
-TodoAPI.create({ label: "Fazer Almoço", complete: false });
-TodoAPI.create({ label: "Fazer Lanche", complete: false });
-
-TodoAPI.getAll().then((data) => console.log("2", data));
-
-TodoAPI.updateById("1", { label: "Fazer Janta", complete: false });
-
-TodoAPI.getAll().then((data) => console.log("3", data));
-
-TodoAPI.deleteById("1");
-
-TodoAPI.getAll().then((data) => console.log("4", data));
+import { TodoAPI, type ITodo } from "./shared/services/api/TodoAPI";
 
 export function App() {
-  const [list, setList] = useState([
-    { id: "1", label: "Fazer café", complete: false },
-    { id: "2", label: "Fazer café", complete: false },
-    { id: "3", label: "Fazer almoço", complete: false },
-    { id: "4", label: "Fazer janta", complete: false },
-  ]);
+  const [list, setList] = useState<ITodo[]>([]);
+
+  useEffect(() => {
+    TodoAPI.getAll().then((data) => setList(data));
+  }, []);
 
   const handleAdd = (value: string) => {
-    setList([
-      ...list,
-      {
-        id: (list.length + 1).toString(),
-        complete: false,
-        label: value,
-      },
-    ]);
+    TodoAPI.create({ label: value, complete: false }).then((data) => {
+      setList([...list, data]);
+    });
   };
 
   const handleComplete = (id: string) => {
