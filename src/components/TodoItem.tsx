@@ -26,9 +26,9 @@ export const TodoItem = ({
       {label}
 
       {complete ? "Concluido" : ""}
-      <button onClick={() => handleComplete()}>Remover</button>
+      <button onClick={() => handleRemove()}>Remover</button>
 
-      <button onClick={() => handleRemove()}>Concluir</button>
+      <button onClick={() => handleComplete()}>Concluir</button>
     </li>
   );
 };

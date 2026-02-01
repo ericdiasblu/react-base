@@ -8,7 +8,7 @@ export interface ITodo {
   complete: boolean;
 }
 
-interface ITodoWithoutId {
+export interface ITodoWithoutId {
   label: string;
   complete: boolean;
 }
